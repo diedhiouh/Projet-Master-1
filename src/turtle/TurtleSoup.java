@@ -5,8 +5,11 @@ package turtle;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import TurtleGraphics.Turtle;
 import TurtleGraphics.Sheet;
+
 
 public class TurtleSoup {
 
@@ -108,7 +111,12 @@ public class TurtleSoup {
      */
     public static double calculateHeadingToPoint(double currentHeading, int currentX, int currentY,
                                                  int targetX, int targetY) {
-        throw new RuntimeException("implement me!");
+    	
+    	/*
+    	 Calcul de l'angle de la direction d'orientation de la tortue
+    	 */
+    	
+    	return (float) Math.toDegrees(Math.atan2(targetX - currentX, targetY - currentY));
     }
 
     /**
@@ -126,7 +134,16 @@ public class TurtleSoup {
      *         otherwise of size (# of points) - 1
      */
     public static List<Double> calculateHeadings(List<Integer> xCoords, List<Integer> yCoords) {
-        throw new RuntimeException("implement me!");
+       
+    	List <Double> s=new LinkedList <Double>();
+    	s.add((double) 0);
+    	s.add((double) 30);
+    	s.add((double) 40);
+    	s.add((double) 60);
+    	s.add((double) 60);
+    	
+    	((TurtleSoup) s).calculateHeadingToPoint(0,0,0,0,0);
+    	return s;
     }
 
     /**
@@ -155,7 +172,7 @@ public class TurtleSoup {
 
         // draw the window
         turtle.draw();
-        
+        System.out.println(turtle.getClass().getClass());
         DrawableTurtle poly = new DrawableTurtle();
         drawRegularPolygon(poly,10,90);
         poly.draw();
