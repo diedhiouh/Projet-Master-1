@@ -5,6 +5,8 @@ package turtle;
 
 import java.util.List;
 import java.util.ArrayList;
+import TurtleGraphics.Turtle;
+import TurtleGraphics.Sheet;
 
 public class TurtleSoup {
 
@@ -15,7 +17,7 @@ public class TurtleSoup {
      * @param sideLength length of each side
      */
     public static void drawSquare(Turtle turtle, int sideLength) {
-        throw new RuntimeException("implement me!");
+        // new RuntimeException("implement me!");
     }
 
     /**
