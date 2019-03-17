@@ -20,14 +20,14 @@ public class TurtleSoup {
      * @param sideLength length of each side
      */
     public static void drawSquare(DrawableTurtle turtle, int sideLength) {
-        
-    	turtle.forward(60);
+        //Dessin de Rectangle/Carre
+    	turtle.forward(sideLength);
     	turtle.turn(90);
-    	turtle.forward(90);
+    	turtle.forward(sideLength);
     	turtle.turn(90);
-    	turtle.forward(60);
+    	turtle.forward(sideLength);
     	turtle.turn(90);
-    	turtle.forward(90);
+    	turtle.forward(sideLength);
     }
 
     /**
@@ -41,13 +41,15 @@ public class TurtleSoup {
      */
     public static double calculateRegularPolygonAngle(int sides) {
       
-    	//Calculer l'angle interne du polygone regulier
+    	//Calculer l'angle interne du polygone regulier a partir du nombre de cote
     	double angl=0;
     	
     	if (sides>2)
+    		//Formule: angle = 360/nombre de cote
     		angl=(360/sides);
     	
-    	if(angl>0 || angl<360)	
+    	//angl doit etre dans l'intervalle [0,360[
+    	if(angl>0 && angl<360)	
     		return angl;
     	else
     		return 0;
@@ -64,6 +66,8 @@ public class TurtleSoup {
      * @return the integer number of sides
      */
     public static int calculatePolygonSidesFromAngle(double angle) {
+    	
+    	//Calcul du nombre de cote du polygone  a partir de l'angle
     	int side=0;
     	if(angle>0 && angle<180)
     		side=(int) (360/(180-angle));
@@ -81,7 +85,8 @@ public class TurtleSoup {
      * @param sideLength length of each side
      */
     public static void drawRegularPolygon(DrawableTurtle turtle, int sides, int sideLength) {
-      
+       
+    	//Dessin de polygone regulier
     	for(int i=0;i<sides;i++){
     	   turtle.forward(sideLength);
     	   System.out.println(calculateRegularPolygonAngle(sides));
@@ -135,15 +140,28 @@ public class TurtleSoup {
      */
     public static List<Double> calculateHeadings(List<Integer> xCoords, List<Integer> yCoords) {
        
-    	List <Double> s=new LinkedList <Double>();
-    	s.add((double) 0);
-    	s.add((double) 30);
-    	s.add((double) 40);
-    	s.add((double) 60);
-    	s.add((double) 60);
+    	//Taille de xCoords
+    	int n = xCoords.size();
     	
-    	((TurtleSoup) s).calculateHeadingToPoint(0,0,0,0,0);
-    	return s;
+    	//Liste des ajustement
+    	List<Double> Malist=new ArrayList<>();
+    	
+    	//Recuperer angle par la fonction calculateHeadingToPoint
+    	double angle = calculateHeadingToPoint(0, xCoords.get(0), yCoords.get(0), xCoords.get(1), yCoords.get(1));
+    	Malist.add(angle);
+    	double adjustment = 0;
+    	
+    	//Parcours de xCoords et Remplissage de Malist
+    	for(int i = 1; i < n-1; i++)
+    	{
+    		adjustment = calculateHeadingToPoint(angle, xCoords.get(i), yCoords.get(i), xCoords.get(i+1), yCoords.get(i+1));
+    		angle = angle +adjustment;
+    		angle = angle > 360 ? angle-360 : angle;
+    		Malist.add(adjustment);
+    	}
+    	
+    	//Retour de Malist
+    	return Malist;
     }
 
     /**
@@ -152,12 +170,31 @@ public class TurtleSoup {
      * Many interesting images can be drawn using the simple implementation of a turtle.  For this
      * function, draw something interesting; the complexity can be as little or as much as you want.
      * 
-     * @param turtle the turtle context
+     * @param d the turtle context
      */
-    public static void drawPersonalArt(Turtle turtle) {
-        throw new RuntimeException("implement me!");
+    public static void drawPersonalArt(DrawableTurtle d) {
+    
+    	//Dessin de decoration d'etoile multiple
+    	PenColor p=null;
+    	
+    	for(int c=0;c<2;c++){
+    		
+	    	for(int i=0;i<12;i++){
+	    		d.color(p.BLUE);
+	    		d.forward(150);
+	    		d.turn(150);
+	    		
+	    		for(int j=0;j<12;j++){
+	    			//d.color(p.GREEN);
+	    			d.forward(50);
+	    			d.turn(150);
+	    		}
+	    	}
+	    	d.color(p.GRAY);
+	    	d.forward(-100);
+	    	d.turn(135);
+    	}
     }
-
     /**
      * Main method.
      * 
@@ -167,15 +204,21 @@ public class TurtleSoup {
      */
     public static void main(String args[]) {
         DrawableTurtle turtle = new DrawableTurtle();
-
         drawSquare(turtle, 40);
 
         // draw the window
         turtle.draw();
-        System.out.println(turtle.getClass().getClass());
+        
+       //Dessin du ploygone
         DrawableTurtle poly = new DrawableTurtle();
         drawRegularPolygon(poly,10,90);
         poly.draw();
+        
+        //Dessin de art personnnel
+        
+        DrawableTurtle d= new DrawableTurtle();
+        drawPersonalArt(d);
+        d.draw();
         
     }
 
