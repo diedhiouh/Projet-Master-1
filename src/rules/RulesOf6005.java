@@ -37,22 +37,25 @@ public class RulesOf6005 {
             boolean citingYourSource, boolean implementationRequired) {
         
         // TODO: Fill in this method, then remove the exception
-    	
+    	//Si le code est ecrit par toi meme
     	if(writtenByYourself)
     		implementationRequired =true;
     	 else
     		implementationRequired = false;
     	
+    	//Si le code est disponible les autres eleves de la classe
     	 if(availableToOthers)
     		implementationRequired =false;
     	 else
     		implementationRequired =true;
   	
+    	 //Si le code est une solution des semestres passes ou courants
     	 if(writtenAsCourseWork)
     		implementationRequired=true;
     	 else
     		 implementationRequired=false;
     
+    	 //Si tu es cite dans un source
     	 if(citingYourSource)
     		implementationRequired=true;
     	 

@@ -6,7 +6,6 @@ package turtle;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import TurtleGraphics.Turtle;
 import TurtleGraphics.Sheet;
 
@@ -40,19 +39,12 @@ public class TurtleSoup {
      * @return angle in degrees, where 0 <= angle < 360
      */
     public static double calculateRegularPolygonAngle(int sides) {
-      
     	//Calculer l'angle interne du polygone regulier a partir du nombre de cote
-    	double angl=0;
     	
-    	if (sides>2)
-    		//Formule: angle = 360/nombre de cote
-    		angl=(360/sides);
-    	
-    	//angl doit etre dans l'intervalle [0,360[
-    	if(angl>0 && angl<360)	
-    		return angl;
-    	else
+    	if(sides<2)	
     		return 0;
+    	else
+    		return (double)(360/sides);
     }
 
     /**
@@ -71,7 +63,6 @@ public class TurtleSoup {
     	int side=0;
     	if(angle>0 && angle<180)
     		side=(int) (360/(180-angle));
-    	
         return side;
     }
 
@@ -89,7 +80,8 @@ public class TurtleSoup {
     	//Dessin de polygone regulier
     	for(int i=0;i<sides;i++){
     	   turtle.forward(sideLength);
-    	   System.out.println(calculateRegularPolygonAngle(sides));
+    	   //Affichage du l'angle interne du polygone
+    	   System.out.println("Angle interne du polygone=>"+calculateRegularPolygonAngle(sides));
     	   turtle.turn(calculateRegularPolygonAngle(sides));
        }
        
@@ -175,10 +167,14 @@ public class TurtleSoup {
     public static void drawPersonalArt(DrawableTurtle d) {
     
     	//Dessin de decoration d'etoile multiple
+    	
+    	//Definition de couleur
     	PenColor p=null;
     	
+    	//Boucle de repetition de figure de decoration
     	for(int c=0;c<2;c++){
     		
+    		//Boucle de dessin d'un figure
 	    	for(int i=0;i<12;i++){
 	    		d.color(p.BLUE);
 	    		d.forward(150);
@@ -190,6 +186,7 @@ public class TurtleSoup {
 	    			d.turn(150);
 	    		}
 	    	}
+	    	//Decallage pour dessiner une autre figure
 	    	d.color(p.GRAY);
 	    	d.forward(-100);
 	    	d.turn(135);
@@ -212,7 +209,7 @@ public class TurtleSoup {
        //Dessin du ploygone
         DrawableTurtle poly = new DrawableTurtle();
         drawRegularPolygon(poly,10,90);
-        poly.draw();
+       // poly.draw();
         
         //Dessin de art personnnel
         
