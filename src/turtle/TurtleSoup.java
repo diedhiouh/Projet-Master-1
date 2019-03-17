@@ -44,7 +44,7 @@ public class TurtleSoup {
     	if(sides<2)	
     		return 0;
     	else
-    		return (double)(360/sides);
+    		return (double)((sides-2)*180)/sides;
     }
 
     /**
@@ -62,7 +62,7 @@ public class TurtleSoup {
     	//Calcul du nombre de cote du polygone  a partir de l'angle
     	int side=0;
     	if(angle>0 && angle<180)
-    		side=(int) (360/(180-angle));
+    		side=(int) (360/(180-angle)+0.5);
         return side;
     }
 
@@ -112,8 +112,10 @@ public class TurtleSoup {
     	/*
     	 Calcul de l'angle de la direction d'orientation de la tortue
     	 */
-    	
-    	return (float) Math.toDegrees(Math.atan2(targetX - currentX, targetY - currentY));
+    	double angle=Math.toDegrees(Math.atan2(targetX - currentX, targetY - currentY))-currentHeading;
+    	if(angle < 0)
+    		angle += 360;		
+    	return angle; 
     }
 
     /**
